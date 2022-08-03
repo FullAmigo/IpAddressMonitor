@@ -1,0 +1,70 @@
+name: Create Release and Upload Asset
+
+# https://github.com/actions/upload-release-asset
+
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+jobs:
+  build:
+    name: Upload Release Asset
+    runs-on: windows-latest
+    
+    steps:
+      - name: 🛒 Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: ✨ Set up .NET 6.0
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 6.0.x
+    
+      # # https://github.community/t/how-to-get-just-the-tag-name/16241/17
+      # # ${{ steps.get_version.outputs.VERSION }}
+      # - name: Get the version
+      #   id: get_version
+      #   run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      #   shell: bash
+      
+      - name: 🚚 Restore dependencies
+        working-directory: src
+        run: dotnet restore
+
+      - name: 🛠️ Build
+        working-directory: src
+        run: dotnet build --configuration Release --no-restore
+
+      - name: 🚀 Publish IpAddressMonitor.WinFormsApp
+        run: dotnet publish --configuration Release -p:PublishProfile=FolderProfile .\src\IpAddressMonitor.WinFormsApp\IpAddressMonitor.WinFormsApp.csproj
+      - name: 📦 Archive
+        shell: pwsh
+        run: |
+          Compress-Archive -Path ".\src\IpAddressMonitor.WinFormsApp\bin\publish\IpAddressMonitor.WinFormsApp.exe" -DestinationPath ".\IpAddressMonitor.WinFormsApp.zip"
+
+      - name: 📝 Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            TBD
+          draft: true
+          prerelease: true
+
+      - name: 🚢 Upload IpAddressMonitor.WinFormsApp Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: .\IpAddressMonitor.WinFormsApp.zip
+          asset_name: IpAddressMonitor.WinFormsApp.zip
+          asset_content_type: application/zip
