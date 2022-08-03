@@ -12,7 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ソリューション項目
 		stylecop.json = stylecop.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpAddressMonitor.UnitTests", "IpAddressMonitor.UnitTests\IpAddressMonitor.UnitTests.csproj", "{39CA2074-645E-46F7-94C6-99B4D7ACF573}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IpAddressMonitor.UnitTests", "IpAddressMonitor.UnitTests\IpAddressMonitor.UnitTests.csproj", "{39CA2074-645E-46F7-94C6-99B4D7ACF573}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpAddressMonitor.WinFormsApp", "IpAddressMonitor.WinFormsApp\IpAddressMonitor.WinFormsApp.csproj", "{B2ED5E68-49AD-4080-8EFE-EC614E4AA0FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +30,10 @@ Global
 		{39CA2074-645E-46F7-94C6-99B4D7ACF573}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39CA2074-645E-46F7-94C6-99B4D7ACF573}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39CA2074-645E-46F7-94C6-99B4D7ACF573}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2ED5E68-49AD-4080-8EFE-EC614E4AA0FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2ED5E68-49AD-4080-8EFE-EC614E4AA0FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2ED5E68-49AD-4080-8EFE-EC614E4AA0FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2ED5E68-49AD-4080-8EFE-EC614E4AA0FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

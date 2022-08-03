@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>IpAddress.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="IpAddress.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IpAddressMonitor\IpAddressMonitor.csproj" />
+  </ItemGroup>
+
+</Project>
