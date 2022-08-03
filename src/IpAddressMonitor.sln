@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IpAddressMonitor", "IpAddressMonitor\IpAddressMonitor.csproj", "{ADF2FC9E-C75B-4C66-B400-4EFD6B73DC27}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ソリューション項目", "ソリューション項目", "{85ADB104-87B2-4D1A-A4E2-6F35CA6BAE8E}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Directory.Build.props = Directory.Build.props
+		stylecop.json = stylecop.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpAddressMonitor.UnitTests", "IpAddressMonitor.UnitTests\IpAddressMonitor.UnitTests.csproj", "{39CA2074-645E-46F7-94C6-99B4D7ACF573}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ADF2FC9E-C75B-4C66-B400-4EFD6B73DC27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADF2FC9E-C75B-4C66-B400-4EFD6B73DC27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADF2FC9E-C75B-4C66-B400-4EFD6B73DC27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADF2FC9E-C75B-4C66-B400-4EFD6B73DC27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39CA2074-645E-46F7-94C6-99B4D7ACF573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39CA2074-645E-46F7-94C6-99B4D7ACF573}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39CA2074-645E-46F7-94C6-99B4D7ACF573}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39CA2074-645E-46F7-94C6-99B4D7ACF573}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {91A20EC3-CA3D-40A3-A805-09A418F9D17A}
+	EndGlobalSection
+EndGlobal
