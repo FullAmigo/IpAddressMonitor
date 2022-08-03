@@ -124,7 +124,9 @@ namespace IpAddressMonitor
         /// <see langword="false" />。
         /// </param>
         /// <returns><see cref="NetIpInfo" /> の列挙子。</returns>
-        public static IEnumerable<NetIpInfo> GetNetIpInfos(bool excludeLoopback = false, bool excludeIPv6 = false,
+        public static IEnumerable<NetIpInfo> GetNetIpInfos(
+            bool excludeLoopback = false,
+            bool excludeIPv6 = false,
             bool onlyStatusUp = false)
         {
             var query = from adapter in NetworkInterface.GetAllNetworkInterfaces()
