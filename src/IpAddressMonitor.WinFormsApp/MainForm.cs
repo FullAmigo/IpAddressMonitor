@@ -168,7 +168,7 @@ public partial class MainForm : Form
         var infos = netIpInfos ?? MainForm.GetAvailableNetIpv4Infos();
         var text = string.Join(
             Environment.NewLine,
-            infos.Select(info => $"{info.IpAddress}/{info.PrefixLength}"));
+            infos.Select(info => $"{info.IpAddress}/{info.PrefixLength} {info.InterfaceType}"));
         this.labelOfInformation.Text = text;
     }
 
