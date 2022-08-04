@@ -62,7 +62,7 @@ public partial class MainForm : Form
             return;
         }
 
-        var infos = NetIpInfo.GetNetIpInfos(true, true).ToArray();
+        var infos = MainForm.GetAvailableNetIpv4Infos();
         this.UpdateInformationText(infos);
         this.UpdateInformationState(infos.Any());
 
@@ -111,6 +111,21 @@ public partial class MainForm : Form
     }
 
     /// <summary>
+    /// 有効な <see cref="NetIpInfo" /> のコレクションを取得します。
+    /// </summary>
+    /// <returns>有効な <see cref="NetIpInfo" /> のコレクション。</returns>
+    private static IReadOnlyCollection<NetIpInfo> GetAvailableNetIpv4Infos()
+    {
+        var infos = NetIpInfo.GetNetIpInfos(
+                onlyStatusUp: true,
+                excludeLoopback: true,
+                excludeIPv6: true)
+            .OrderBy(info => new Version(info.IpAddress.ToString()))
+            .ToArray();
+        return infos;
+    }
+
+    /// <summary>
     /// デスクトップへスナップします。
     /// </summary>
     private void SnapToScreen()
@@ -150,8 +165,7 @@ public partial class MainForm : Form
     /// <param name="netIpInfos"><see cref="NetIpInfo" /> のコレクション。</param>
     private void UpdateInformationText(IEnumerable<NetIpInfo>? netIpInfos = null)
     {
-        var infos = netIpInfos
-                    ?? NetIpInfo.GetNetIpInfos(true, true).ToArray();
+        var infos = netIpInfos ?? MainForm.GetAvailableNetIpv4Infos();
         var text = string.Join(
             Environment.NewLine,
             infos.Select(info => $"{info.IpAddress}/{info.PrefixLength}"));
