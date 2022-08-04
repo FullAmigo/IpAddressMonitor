@@ -14,6 +14,9 @@ namespace IpAddressMonitor.WinFormsApp;
 /// </summary>
 public partial class MainForm : Form
 {
+    /// <summary>動機コンテキストを表します。</summary>
+    private SynchronizationContext? _syncContext;
+
     /// <summary>
     /// <see cref="MainForm" /> クラスの新しいインスタンスを生成します。
     /// </summary>
@@ -93,6 +96,13 @@ public partial class MainForm : Form
                 mousePressedPoint = null;
             }
         }
+    }
+
+    /// <inheritdoc />
+    protected override void OnShown(EventArgs e)
+    {
+        base.OnShown(e);
+        this._syncContext = SynchronizationContext.Current;
     }
 
     /// <inheritdoc />
@@ -205,7 +215,7 @@ public partial class MainForm : Form
     /// <param name="sender">イベントのソースを表す <see cref="object" />。</param>
     /// <param name="e">イベントデータを格納している <see cref="EventArgs" />。</param>
     private void NetworkChange_NetworkAddressChanged(object? sender, EventArgs e) =>
-        SynchronizationContext.Current?.Post(
+        this._syncContext?.Post(
             _ => this.UpdateInformationText(),
             null);
 
@@ -215,7 +225,7 @@ public partial class MainForm : Form
     /// <param name="sender">イベントのソースを表す <see cref="object" />。</param>
     /// <param name="e">イベントデータを格納している <see cref="NetworkAvailabilityEventArgs" />。</param>
     private void NetworkChange_NetworkAvailabilityChanged(object? sender, NetworkAvailabilityEventArgs e) =>
-        SynchronizationContext.Current?.Post(
+        this._syncContext?.Post(
             state => this.UpdateInformationState(state as NetworkAvailabilityEventArgs),
             e);
 }
