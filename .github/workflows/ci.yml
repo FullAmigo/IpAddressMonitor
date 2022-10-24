@@ -17,8 +17,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-latest
-            osName: Linux
           - os: windows-latest
             osName: Windows
     name: Test on ${{ matrix.osName }}
