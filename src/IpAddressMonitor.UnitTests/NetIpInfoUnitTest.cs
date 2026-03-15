@@ -14,6 +14,6 @@ public class NetIpInfoUnitTest
     {
         var actual = NetIpInfo.GetNetIpInfos().ToArray();
         Assert.NotNull(actual);
-        Assert.True(actual.Any());
+        Assert.NotEmpty(actual);
     }
 }

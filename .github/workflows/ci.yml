@@ -4,28 +4,36 @@ on:
   workflow_dispatch:
   push:
     branches:
-    - main
+      - main
     paths:
-    - "src/**"
+      - ".github/workflows/ci.yml"
+      - "src/**"
   pull_request:
     paths:
-    - "src/**"
+      - ".github/workflows/ci.yml"
+      - "src/**"
   
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build-and-test:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: windows-latest
-            osName: Windows
-    name: Test on ${{ matrix.osName }}
-    permissions:
-      contents: read
-    uses: MareMare/ReusableWorkflows/.github/workflows/ci.net6.yml@main
-    with:
-      runner-os: ${{ matrix.os }}
-      working-directory: src
-      testing-directory: src
-      run-unittest: 'true'
-      unittest-filter: 'Category!=local'
+  ci:
+    name: 🧪 CI
+    runs-on: windows-latest
+    steps:
+      - name: 🛒 Checkout
+        uses: actions/checkout@v6.0.1
+        with:
+          fetch-depth: 0
+          filter: tree:0
+          ref: ${{ github.head_ref }}
+      - name: ✨ Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+
+      - name: 🛠️ Build
+        run: dotnet build "src\IpAddressMonitor.slnx" --configuration Release
+      - name: 🧪 Test
+        run: dotnet test "src\IpAddressMonitor.slnx" --configuration Release --no-build --verbosity normal
