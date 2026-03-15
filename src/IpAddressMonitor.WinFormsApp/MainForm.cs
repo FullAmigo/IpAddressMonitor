@@ -12,7 +12,7 @@ namespace IpAddressMonitor.WinFormsApp;
 /// <summary>
 /// メインフォームを表します。
 /// </summary>
-public partial class MainForm : Form
+internal partial class MainForm : Form
 {
     /// <summary>動機コンテキストを表します。</summary>
     private SynchronizationContext? _syncContext;
@@ -67,7 +67,7 @@ public partial class MainForm : Form
 
         var infos = MainForm.GetAvailableNetIpv4Infos();
         this.UpdateInformationText(infos);
-        this.UpdateInformationState(infos.Any());
+        this.UpdateInformationState(infos.Length > 0);
 
         var target = this.labelOfInformation;
 
@@ -124,7 +124,7 @@ public partial class MainForm : Form
     /// 有効な <see cref="NetIpInfo" /> のコレクションを取得します。
     /// </summary>
     /// <returns>有効な <see cref="NetIpInfo" /> のコレクション。</returns>
-    private static IReadOnlyCollection<NetIpInfo> GetAvailableNetIpv4Infos()
+    private static NetIpInfo[] GetAvailableNetIpv4Infos()
     {
         var infos = NetIpInfo.GetNetIpInfos(
                 onlyStatusUp: true,
@@ -160,6 +160,8 @@ public partial class MainForm : Form
         {
             this.Top = screen.WorkingArea.Bottom - this.Height;
         }
+
+        return;
 
         static bool CanSnap(int pos, int edge)
         {
