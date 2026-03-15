@@ -1,0 +1,50 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag name. eg) "v0.1.0"'
+        required: true
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+env:
+  TAG_NAME: ${{ inputs.tag || github.ref_name }}
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - name: 💡 gh --version
+        run: gh --version
+      - name: 🛒 Checkout
+        uses: actions/checkout@v6.0.2
+      - name: ✨ Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+
+      - name: 🛠️ Build
+        working-directory: src
+        run: dotnet build --configuration Release --no-restore
+
+      - name: 🚀 Publish IpAddressMonitor.WinFormsApp
+        run: dotnet publish --configuration Release -p:PublishProfile=FolderProfile .\src\IpAddressMonitor.WinFormsApp\IpAddressMonitor.WinFormsApp.csproj
+      - name: 📦 Archive
+        shell: pwsh
+        run: |
+          Compress-Archive -Path ".\src\IpAddressMonitor.WinFormsApp\bin\publish\IpAddressMonitor.WinFormsApp.exe" -DestinationPath ".\IpAddressMonitor.WinFormsApp.zip"
+
+      - name: 📝 Create Draft Release
+        run: gh release create ${{ env.TAG_NAME }} --title "Release ${{ env.TAG_NAME }}" --generate-notes --draft --prerelease
+
+      - name: ➕ Upload Assets
+        run: gh release upload ${{ env.TAG_NAME }} ".\IpAddressMonitor.WinFormsApp.zip"
+
+      - name: 📣 Summary
+        run: echo "### ✅ Release succeeded! ${{ env.TAG_NAME }} 🌟" >> $GITHUB_STEP_SUMMARY
+        shell: bash
